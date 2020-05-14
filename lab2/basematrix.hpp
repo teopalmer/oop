@@ -7,9 +7,9 @@ class BaseMatrix
         explicit BaseMatrix(): rows(0), columns(0), size(0){};
         virtual ~BaseMatrix() = default;
 
-        void setRows(size_t rows) {this->rows = rows;}
-        void setColumns(size_t columns) {this->columns = columns;}
-        void setSize(size_t size) {this->size = this->columns * this->rows;}
+        void setRows(size_t r) {this->rows = r;}
+        void setColumns(size_t c) {this->columns = c;}
+        void setSize() {this->size = this->columns * this->rows;}
 
         size_t getRows() const {return this->rows;}
         size_t getColumns() const {return this->columns;}

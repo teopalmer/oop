@@ -3,4 +3,4 @@ project(lab2)
 
 set(CMAKE_CXX_STANDARD 14)
 
-add_executable(lab2 main.cpp basematrix.hpp matrix.hpp)
+add_executable(lab2 main.cpp basematrix.hpp matrix.hpp matrix.cpp)

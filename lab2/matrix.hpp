@@ -59,5 +59,10 @@ Matrix<T>::Matrix() {
 template<class T>
 Matrix<T>::~Matrix()
 {
-
+    size_t rows = this->getRows();
+    size_t cols = this->getCols();
+    for (int i = 0; i < rows; i ++)
+    {
+        matrix[i].free();
+    }
 }

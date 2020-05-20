@@ -13,14 +13,13 @@ namespace iterator_core
     public:
         base_iterator();
         base_iterator(const base_iterator<ValueType>&);
-        base_iterator(ValueType*);
+        explicit base_iterator(ValueType*);
         virtual ~base_iterator();
         base_iterator<ValueType>& operator =(const base_iterator<ValueType>&);
         base_iterator<ValueType>& operator ++();
         base_iterator<ValueType> operator ++(int);
         base_iterator<ValueType>& operator --();
         base_iterator<ValueType> operator --(int);
-        operator bool() const;
         bool operator ==(const base_iterator<ValueType>&) const;
         bool operator !=(const base_iterator<ValueType>&) const;
     protected:

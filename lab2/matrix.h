@@ -52,6 +52,7 @@ public:
     Matrix<T> operator /(const T& num) const;
     
     Matrix<T>& operator +=(const Matrix<T>& mtr);
+    
     Matrix<T>& operator -=(const Matrix<T>& mtr);
     Matrix<T>& operator *=(const Matrix<T>& mtr);
     
@@ -77,14 +78,6 @@ public:
     void auto_fill();
     void fill(float fill);
     void identity_matrix(); //единичная матрица
-    
-    Matrix<T> add(Matrix<T>& A, Matrix<T>& B);
-    Matrix<T> add(Matrix<T>& matrix, T element);
-    Matrix<T> sub(Matrix<T>& A, Matrix<T>& B);
-    Matrix<T> sub(Matrix<T>& matrix, T element);
-    Matrix<T> mult(Matrix<T>& A, Matrix<T>& B);
-    Matrix<T> mult(Matrix<T>& matrix, T element);
-    Matrix<T> divide(Matrix<T>& matrix, T element);
     
     class Row
     {
@@ -122,7 +115,7 @@ public:
         if (row >= this->get_rows())
         {
             time_t t_time;
-            t_time = time(NULL);
+            t_time = time(nullptr);
             throw index_out_of_range_exception(__FILE__, typeid(*this).name(), __LINE__ - 4, ctime(&t_time), "Index out of range");
         }
         return Row(*this, row);

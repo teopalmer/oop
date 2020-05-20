@@ -14,7 +14,6 @@ int main() {
 
         Matrix<int> A(4, 4); //обычный
         cout << A;
-
         Matrix <float> K({{1, 0.5, 2}, {3, 3.2, 5}}); //ручной ввод
         cout << K;
 
@@ -24,13 +23,18 @@ int main() {
         Matrix<int> B(A); //копирование
         cout << B;
 
-        cout << "Тестирование сложения\n\n";
+        cout << "Сложение\n\n";
         B += A;
         cout << B;
 
         cout << "Тестирование вычитания\n\n";
         B -= A;
         cout << B;
+
+        B *= A;
+        cout << B;
+
+
 
         Matrix<int> C({{1, 2, 3},
                           {4, 5, 6}});
@@ -51,8 +55,8 @@ int main() {
                           {5, 5, 5, 5, 5}});
         F.transposition();
         cout << F;
-        Matrix<int> mtr7 = F.transposition();
-        cout << mtr7;
+        Matrix<int> FT = F.transposition();
+        cout << FT;
 
         cout << "\nТестирование умножения матриц\n\n";
         Matrix<int> D(4, 4);

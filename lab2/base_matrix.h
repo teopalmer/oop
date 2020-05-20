@@ -12,8 +12,8 @@ namespace matrix_core
         explicit base_matrix(size_t);
         virtual ~base_matrix();
         bool is_empty() const;
-        size_t get_rows(void) const {return this->rows;}
-        size_t get_columns(void) const {return this->columns;}
+        size_t get_rows() const {return this->rows;}
+        size_t get_columns() const {return this->columns;}
         size_t size() const;
     protected:
         size_t columns;

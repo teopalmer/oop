@@ -39,7 +39,7 @@ template <typename T>
 Matrix<T>::Matrix(const Matrix<T> &mtr):base_matrix()
 {
     time_t t_time;
-    t_time = time(NULL);
+    t_time = time(nullptr);
     this->n = mtr.get_n();
     this->m = mtr.get_m();
     this->elements_count = mtr.size();
@@ -65,7 +65,7 @@ template<typename T>
 Matrix<T>::Matrix(Matrix<T>&& mtr)
 {
     time_t t_time;
-    t_time = time(NULL);
+    t_time = time(nullptr);
     this->n = mtr.get_n();
     this->m = mtr.get_m();
     this->elements_count = mtr.size();
@@ -92,7 +92,7 @@ Matrix<T>::Matrix(Matrix<T>&& mtr)
 Matrix<T>::Matrix(unsigned int n, unsigned int m, T **matrix)
 {
     time_t t_time;
-    t_time = time(NULL);
+    t_time = time(nullptr);
     if (n == 0 || m == 0) throw is_empty_exception(__FILE__, typeid(*this).name(), __LINE__ - 4, ctime(&t_time), "Zero size");
     this->elements_count = n * m;
     this->n = n;
@@ -124,7 +124,6 @@ Matrix<T>::Matrix(std::initializer_list<std::initializer_list<T>> lst)
     {
         this->mtr = std::shared_ptr<T>(new T[n * m]);
     }
-    
     catch (std::bad_alloc)
     {
         throw is_empty_exception(__FILE__, typeid(*this).name(), __LINE__ - 4, ctime(&t_time), "Allocation memory error");
@@ -148,7 +147,7 @@ template<typename T>
 const T& Matrix<T>::get_value_by_index(unsigned int i, unsigned int j) const
 {
     time_t t_time;
-    t_time = time(NULL);
+    t_time = time(nullptr);
     if (i >= this->n || j >= this->m)
     {
         throw index_out_of_range_exception(__FILE__, typeid(*this).name(), __LINE__ - 4, ctime(&t_time), "Index out of range");
@@ -172,7 +171,7 @@ template<typename T>
 void Matrix<T>::set_value_by_index(unsigned int i, unsigned int j, const T &value)
 {
     time_t t_time;
-    t_time = time(NULL);
+    t_time = time(nullptr);
     if (i >= this->n || j >= this->m)
     {
         throw index_out_of_range_exception(__FILE__, typeid(*this).name(), __LINE__ - 4, ctime(&t_time), "Index out of range");
@@ -196,7 +195,7 @@ template<typename T>
 Matrix<T>& Matrix<T>::operator =(const Matrix<T> &mtr)
 {
     time_t t_time;
-    t_time = time(NULL);
+    t_time = time(nullptr);
     unsigned int n_mtr = mtr.get_n();
     unsigned int m_mtr = mtr.get_m();
     this->n = n_mtr;
@@ -235,7 +234,7 @@ template<typename T>
 Matrix<T> &Matrix<T>::operator =(Matrix<T> &&mtr)
 {
     time_t t_time;
-    t_time = time(NULL);
+    t_time = time(nullptr);
     unsigned int n_mtr = mtr.get_n();
     unsigned int m_mtr = mtr.get_m();
     this->n = n_mtr;
@@ -273,7 +272,7 @@ template<typename T>
 Matrix<T> &Matrix<T>::operator +=(const Matrix<T> &mtr)
 {
     time_t t_time;
-    t_time = time(NULL);
+    t_time = time(nullptr);
     unsigned int n_mtr = mtr.get_n();
     unsigned int m_mtr = mtr.get_m();
     if (this->m == m_mtr && this->n == n_mtr)
@@ -296,7 +295,7 @@ template<typename T>
 Matrix<T> &Matrix<T>::operator -=(const Matrix<T> &mtr)
 {
     time_t t_time;
-    t_time = time(NULL);
+    t_time = time(nullptr);
     unsigned int n_mtr = mtr.get_n();
     unsigned int m_mtr = mtr.get_m();
     if (this->m == m_mtr && this->n == n_mtr)
@@ -321,7 +320,7 @@ template<typename T>
 Matrix<T> Matrix<T>::operator +(const Matrix<T> &mtr1) const
 {
     time_t t_time;
-    t_time = time(NULL);
+    t_time = time(nullptr);
     if (mtr1.get_n() == this->n && mtr1.get_n() == this->m)
     {
         
@@ -344,7 +343,7 @@ template<typename T>
 Matrix<T> Matrix<T>::operator +(const T& num) const
 {
     time_t t_time;
-    t_time = time(NULL);
+    t_time = time(nullptr);
     Matrix<T> res = Matrix<T>(n, m);
     for (unsigned int i = 0; i < n; i++)
     {
@@ -360,7 +359,7 @@ template <typename T>
 Matrix<T> Matrix<T>::operator -(const Matrix<T> &mtr1) const
 {
     time_t t_time;
-    t_time = time(NULL);
+    t_time = time(nullptr);
     if (mtr1.get_n() == this->n && mtr1.get_n() == this->m)
     {
         Matrix<T> res = Matrix<T>(mtr1.get_n(), mtr1.get_m());
@@ -384,7 +383,7 @@ template<typename T>
 Matrix<T> Matrix<T>::operator -(const T &num) const
 {
     time_t t_time;
-    t_time = time(NULL);
+    t_time = time(nullptr);
     Matrix<T> res = Matrix<T>(n, m);
     for (unsigned int i = 0; i < n; i++)
     {
@@ -400,7 +399,7 @@ template <typename T>
 Matrix<T> Matrix<T>::operator *(const Matrix<T> &mtr1) const
 {
     time_t t_time;
-    t_time = time(NULL);
+    t_time = time(nullptr);
     if (mtr1.get_m() == this->n)
     {
         unsigned int n = this->n;
@@ -429,32 +428,7 @@ Matrix<T> Matrix<T>::operator *(const Matrix<T> &mtr1) const
 template<typename T>
 Matrix<T> &Matrix<T>::operator *=(const Matrix<T> &mtr)
 {
-    time_t t_time;
-    t_time = time(NULL);
-    if (mtr.get_m() == this->n)
-    {
-        unsigned int n = this->n;
-        unsigned int m = mtr.get_m();
-        unsigned int l = this->n;
-        Matrix<T> res = Matrix<T>(n, m);
-        for (unsigned int i = 0; i < n; i++)
-        {
-            for (unsigned int j = 0; j < m; j++)
-            {
-                double sum = 0;
-                for (unsigned int k = 0; k < l; k++)
-                {
-                    sum += mtr.mtr[i * m + k] * this->mtr[k * m + j];
-                }
-                res.mtr[i * m + j] = sum;
-            }
-        }
-        return res;
-    }
-    else
-    {
-        throw is_empty_exception(__FILE__, typeid(*this).name(), __LINE__ - 4, ctime(&t_time), "Sizes should be equal");
-    }
+    *this = *this * mtr;
     return *this;
 }
 
@@ -490,7 +464,7 @@ template<typename T>
 const T& Matrix<T>::operator()(unsigned int i, unsigned int j) const
 {
     time_t t_time;
-    t_time = time(NULL);
+    t_time = time(nullptr);
     if (this->n <= i || this->m <= j) throw index_out_of_range_exception(__FILE__, typeid(*this).name(), __LINE__ - 4, ctime(&t_time), "Index out of range");
     
     return this->mtr[i * this->m + j];
@@ -501,7 +475,7 @@ template<typename T>
 T &Matrix<T>::operator ()(unsigned int i, unsigned int j)
 {
     time_t t_time;
-    t_time = time(NULL);
+    t_time = time(nullptr);
     if (this->n <= i || this->m <= j) throw index_out_of_range_exception(__FILE__, typeid(*this).name(), __LINE__ - 4, ctime(&t_time), "Index out of range");
     
     return this->mtr.get()[i * this->m + j];
@@ -511,7 +485,7 @@ template<typename T>
 Matrix<T> Matrix<T>::inverse_gauss()
 {
     time_t t_time;
-    t_time = time(NULL);
+    t_time = time(nullptr);
     double del = 1;
     double max = this->mtr.get()[0];
     int max_pos = 0;
@@ -564,7 +538,7 @@ template<typename T>
 Matrix<T> &Matrix<T>::clone_matrix()
 {
     time_t t_time;
-    t_time = time(NULL);
+    t_time = time(nullptr);
     if (n != m) throw is_empty_exception(__FILE__, typeid(*this).name(), __LINE__ - 4, ctime(&t_time), "Sizes should be equal");
     for (unsigned int i = 0; i < n; i++)
     {
@@ -587,7 +561,7 @@ template<typename T>
 Matrix<T>& Matrix<T>::transposition()
 {
     time_t t_time;
-    t_time = time(NULL);
+    t_time = time(nullptr);
     if (this->get_m() == this->get_n())
     {
         for (unsigned int i = 0; i < 4; i++)
@@ -715,7 +689,7 @@ T Matrix<T>::determinant(void)
     if (!this->IsSquare())
     {
         time_t t_time;
-        t_time = time(NULL);
+        t_time = time(nullptr);
         throw is_not_square_exception(__FILE__, typeid(*this).name(), __LINE__ - 4, ctime(&t_time), "Matrix is not square");
     }
     T det = determinant_value(this->GetRows(), *this);
@@ -787,19 +761,19 @@ Matrix<T> add(Matrix<T>& A, Matrix<T>& B)
     if (A.is_empty())
     {
         time_t t_time;
-        t_time = time(NULL);
+        t_time = time(nullptr);
         throw is_empty_exception(__FILE__, typeid(A).name(), __LINE__ - 4, ctime(&t_time), "Matrix A is Empty");
     }
     if (B.is_empty())
     {
         time_t t_time;
-        t_time = time(NULL);
+        t_time = time(nullptr);
         throw is_empty_exception(__FILE__, typeid(B).name(), __LINE__ - 4, ctime(&t_time), "Matrix B is Empty");
     }
     if (A != B)
     {
         time_t t_time;
-        t_time = time(NULL);
+        t_time = time(nullptr);
         throw is_empty_exception(__FILE__, typeid(A).name(), __LINE__ - 4, ctime(&t_time), "Matrix A != B");
     }
     Matrix<T> C = A;
@@ -815,7 +789,7 @@ Matrix<T> add(Matrix<T>& matrix, T element)
     if (matrix.is_empty())
     {
         time_t t_time;
-        t_time = time(NULL);
+        t_time = time(nullptr);
         throw is_empty_exception(__FILE__, typeid(matrix).name(), __LINE__ - 4, ctime(&t_time), "Matrix is empty");
     }
     for (size_t i = 0; i < matrix.get_rows(); ++i)
@@ -830,19 +804,19 @@ Matrix<T> sub(Matrix<T>& A, Matrix<T>& B)
     if (A.is_empty())
     {
         time_t t_time;
-        t_time = time(NULL);
+        t_time = time(nullptr);
         throw is_empty_exception(__FILE__, typeid(A).name(), __LINE__ - 4, ctime(&t_time), "Matrix A is Empty");
     }
     if (B.is_empty())
     {
         time_t t_time;
-        t_time = time(NULL);
+        t_time = time(nullptr);
         throw is_empty_exception(__FILE__, typeid(B).name(), __LINE__ - 4, ctime(&t_time), "Matrix B is Empty");
     }
     if (A != B)
     {
         time_t t_time;
-        t_time = time(NULL);
+        t_time = time(nullptr);
         throw is_empty_exception(__FILE__, typeid(A).name(), __LINE__ - 4, ctime(&t_time), "Matrix A != B");
     }
     Matrix<T> C = A;
@@ -858,7 +832,7 @@ Matrix<T> sub(Matrix<T>& matrix, T element)
     if (matrix.is_empty())
     {
         time_t t_time;
-        t_time = time(NULL);
+        t_time = time(nullptr);
         throw is_empty_exception(__FILE__, typeid(matrix).name(), __LINE__ - 4, ctime(&t_time), "Matrix is empty");
     }
     for (size_t i = 0; i < matrix.get_rows(); ++i)
@@ -873,7 +847,7 @@ Matrix<T> mult(Matrix<T>& matrix, T element)
     if (matrix.is_empty())
     {
         time_t t_time;
-        t_time = time(NULL);
+        t_time = time(nullptr);
         throw is_empty_exception(__FILE__, typeid(matrix).name(), __LINE__ - 4, ctime(&t_time), "Matrix is empty");
     }
     for (size_t i = 0; i < matrix.get_rows(); ++i)
@@ -888,19 +862,19 @@ Matrix<T> mult(Matrix<T>& A, Matrix<T>& B)
     if (A.is_empty())
     {
         time_t t_time;
-        t_time = time(NULL);
+        t_time = time(nullptr);
         throw is_empty_exception(__FILE__, typeid(A).name(), __LINE__ - 4, ctime(&t_time), "Matrix A is empty");
     }
     if (B.is_empty())
     {
         time_t t_time;
-        t_time = time(NULL);
+        t_time = time(nullptr);
         throw is_empty_exception(__FILE__, typeid(B).name(), __LINE__ - 4, ctime(&t_time), "Matrix B is empty");
     }
     if (A.GetColumns() != B.get_rows())
     {
         time_t t_time;
-        t_time = time(NULL);
+        t_time = time(nullptr);
         throw cannot_mult_matrix_exception(__FILE__, typeid(A).name(), __LINE__ - 4, ctime(&t_time),"You cannot mult these elements");
     }
     Matrix<T> C(A.get_rows(), B.get_columns());
@@ -920,7 +894,7 @@ Matrix<T> divide(Matrix<T>& matrix, T element)
     if (matrix.is_empty())
     {
         time_t t_time;
-        t_time = time(NULL);
+        t_time = time(nullptr);
         throw is_empty_exception(__FILE__, typeid(matrix).name(), __LINE__ - 4, ctime(&t_time), "Matrix is empty");
     }
     for (size_t i = 0; i < matrix.get_rows(); ++i)

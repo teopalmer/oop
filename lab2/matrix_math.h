@@ -17,7 +17,7 @@ template <typename T>
 Matrix<T>::Matrix(unsigned int n, unsigned int m)
 {
     time_t t_time;
-    t_time = time(NULL);
+    t_time = time(nullptr);
     if (n == 0 || m == 0) throw index_out_of_range_exception(__FILE__, typeid(*this).name(), __LINE__ - 4, ctime(&t_time), "Incorrect size");
     this->elements_count = n * m;
     this->n = n;
@@ -88,7 +88,7 @@ Matrix<T>::Matrix(Matrix<T>&& mtr)
     }
 }
 
-template<typename T>
+/*template<typename T>
 Matrix<T>::Matrix(unsigned int n, unsigned int m, T **matrix)
 {
     time_t t_time;
@@ -109,13 +109,13 @@ Matrix<T>::Matrix(unsigned int n, unsigned int m, T **matrix)
     {
         throw is_empty_exception(__FILE__, typeid(*this).name(), __LINE__ - 4, ctime(&t_time), "Allocation memory error");
     }
-}
+}*/
 
 template<typename T>
 Matrix<T>::Matrix(std::initializer_list<std::initializer_list<T>> lst)
 {
     time_t t_time;
-    t_time = time(NULL);
+    t_time = time(nullptr);
     this->n = lst.size();
     this->m = lst.begin()->size();
     this->elements_count = n * m;
@@ -650,6 +650,13 @@ void Matrix<T>::auto_fill()
 }
 
 template<typename T>
+void Matrix<T>::fill(float fill) {
+    for (size_t i = 0; i < this->n; i++)
+        for (size_t j = 0; j < this->m; j++)
+            mtr.get()[i * m + j] = fill;
+}
+
+template<typename T>
 void Matrix<T>::identity_matrix()
 {
     for (size_t i = 0; i < this->n; i++)
@@ -751,6 +758,27 @@ template<typename T>
 const_iterator<T> Matrix<T>::end() const
 {
     return const_iterator<T>(mtr + n * m);
+}
+
+template<typename T>
+Matrix<T>::Matrix(unsigned int n, unsigned int m, float fill) {
+    time_t t_time;
+    t_time = time(nullptr);
+    if (n == 0 || m == 0) throw index_out_of_range_exception(__FILE__, typeid(*this).name(), __LINE__ - 4, ctime(&t_time), "Incorrect size");
+    this->elements_count = n * m;
+    this->n = n;
+    this->m = m;
+
+    try
+    {
+        this->mtr = std::shared_ptr<T>(new T[elements_count]);
+        this->fill(fill);
+    }
+
+    catch (std::bad_alloc)
+    {
+        throw is_empty_exception(__FILE__, typeid(*this).name(), __LINE__ - 4, ctime(&t_time), "Allocation memory error");
+    }
 }
 
 template <class T>

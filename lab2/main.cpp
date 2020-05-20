@@ -10,51 +10,57 @@ using namespace std;
 
 int main() {
     try {
-        cout << "Тестирование контсрукторов\n\n";
+        cout << "Конструкторы\n\n";
 
-        Matrix<int> mtr1(4, 4);
-        cout << mtr1;
+        Matrix<int> A(4, 4); //обычный
+        cout << A;
 
-        Matrix<int> mtr2(mtr1);
-        cout << mtr2;
+        Matrix <float> K({{1, 0.5, 2}, {3, 3.2, 5}}); //ручной ввод
+        cout << K;
+
+        Matrix <int> P(2, 3, 0); //с заполнением
+        cout << P;
+
+        Matrix<int> B(A); //копирование
+        cout << B;
 
         cout << "Тестирование сложения\n\n";
-        mtr2 += mtr1;
-        cout << mtr2;
+        B += A;
+        cout << B;
 
         cout << "Тестирование вычитания\n\n";
-        mtr2 -= mtr1;
-        cout << mtr2;
+        B -= A;
+        cout << B;
 
-        Matrix<int> mtr3({{1, 2, 3},
+        Matrix<int> C({{1, 2, 3},
                           {4, 5, 6}});
 
         cout << "Тестирование получения элемента по индексу\n\n";
-        int value = mtr3.get_value_by_index(0, 0);
+        int value = C.get_value_by_index(0, 0);
         std::cout << "Полученное значение:  " << value << std::endl;
 
         cout << "\nТестирование проверки на квадратную матрицу\n\n";
-        bool issquare = mtr3.is_square();
-        cout << mtr3 << (issquare ? "Квадратная" : "Не квадратная") << std::endl;
+        bool issquare = C.is_square();
+        cout << C << (issquare ? "Квадратная" : "Не квадратная") << std::endl;
 
         cout << "\nТестирование транспонирования матрицы\n\n";
-        Matrix<int> mtr6({{1, 1, 1, 1, 1},
+        Matrix<int> F({{1, 1, 1, 1, 1},
                           {2, 2, 2, 2, 2},
                           {3, 3, 3, 3, 3},
                           {4, 4, 4, 4, 4},
                           {5, 5, 5, 5, 5}});
-        mtr6.transposition();
-        cout << mtr6;
-        Matrix<int> mtr7 = mtr6.transposition();
+        F.transposition();
+        cout << F;
+        Matrix<int> mtr7 = F.transposition();
         cout << mtr7;
 
         cout << "\nТестирование умножения матриц\n\n";
-        Matrix<int> mtr4(4, 4);
-        mtr1 = mtr1 * mtr4;
-        cout << mtr4;
-        Matrix<int> mtr5(2, 2);
-        mtr2 = mtr4 * mtr5;
-        cout << mtr2;
+        Matrix<int> D(4, 4);
+        A = A * D;
+        cout << D;
+        Matrix<int> E(2, 2);
+        B = D * E;
+        cout << B;
     }
     catch (base_exception &exception) {
         cout << exception.what();

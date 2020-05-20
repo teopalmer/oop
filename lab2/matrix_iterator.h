@@ -19,7 +19,6 @@ public:
     const ValueType *operator ->() const;
     
     matrix_iterator(ValueType *);
-private:
 };
 
 #endif /* matrix_iterator_h */

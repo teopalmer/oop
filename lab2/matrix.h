@@ -21,7 +21,8 @@ class Matrix : public matrix_core::base_matrix
 {
 public:
     Matrix(unsigned int n, unsigned int m);
-    Matrix(unsigned int n, unsigned int m, T** matrix);
+    Matrix(unsigned int n, unsigned int m, float fill);
+    //Matrix(unsigned int n, unsigned int m, T** matrix);
     Matrix(const Matrix<T> &mtr);
     Matrix(Matrix<T>&& mtr);
     Matrix(std::initializer_list<std::initializer_list<T>> lst);
@@ -74,6 +75,7 @@ public:
     void set_value_by_index(unsigned int i, unsigned int j, const T& value);
     bool is_square();
     void auto_fill();
+    void fill(float fill);
     void identity_matrix(); //единичная матрица
     
     Matrix<T> add(Matrix<T>& A, Matrix<T>& B);
@@ -93,7 +95,7 @@ public:
             if (col >= this->parent.get_columns())
             {
                 time_t t_time;
-                t_time = time(NULL);
+                t_time = time(nullptr);
                 throw index_out_of_range_exception(__FILE__, typeid(*this).name(), __LINE__ - 4, ctime(&t_time), "Index out of range");
             }
             return parent.matrix[row][col];
@@ -104,7 +106,7 @@ public:
             if (col >= this->parent.get_columns())
             {
                 time_t t_time;
-                t_time = time(NULL);
+                t_time = time(nullptr);
                 throw index_out_of_range_exception(__FILE__, typeid(*this).name(), __LINE__ - 4, ctime(&t_time), "Index out of range");
             }
             return parent.matrix[row][col];
@@ -127,8 +129,8 @@ public:
     }
     
 private:
-    unsigned int n;
-    unsigned int m;
+    unsigned int n{};
+    unsigned int m{};
     std::shared_ptr<T> mtr;
 };
 

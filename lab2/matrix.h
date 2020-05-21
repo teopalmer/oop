@@ -58,6 +58,14 @@ public:
     
     template<typename _T>
     friend std::ostream& operator <<(std::ostream& os, const Matrix<_T>& matr);
+
+    Matrix<T> add(Matrix<T>& A, Matrix<T>& B);
+    Matrix<T> add(Matrix<T>& matrix, T element);
+    Matrix<T> sub(Matrix<T>& A, Matrix<T>& B);
+    Matrix<T> sub(Matrix<T>& matrix, T element);
+    Matrix<T> mult(Matrix<T>& A, Matrix<T>& B);
+    Matrix<T> mult(Matrix<T>& matrix, T element);
+    Matrix<T> divide(Matrix<T>& matrix, T element);
     
     matrix_iterator<T> begin();
     matrix_iterator<T> end();

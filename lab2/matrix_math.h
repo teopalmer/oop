@@ -755,32 +755,45 @@ Matrix<T>::Matrix(unsigned int n, unsigned int m, float fill) {
     }
 }
 
-template <class T>
+template<typename T>
+Matrix<T> add(Matrix<T> &A, Matrix<T> &B) {
+    return A + B;
+}
+
+template<typename T>
+Matrix<T> add(Matrix<T> &matrix, T element) {
+    return matrix + element;
+}
+
+template<typename T>
+Matrix<T> sub(Matrix<T> &A, Matrix<T> &B) {
+    return A - B;
+}
+
+template<typename T>
+Matrix<T> sub(Matrix<T> &matrix, T element) {
+    return matrix - element;
+}
+
+template<typename T>
+Matrix<T> mult(Matrix<T>& A, Matrix<T>& B) {
+    return A * B;
+}
+
+template<typename T>
+Matrix<T> mult(Matrix<T> &matrix, T element) {
+    return matrix * element;
+}
+
+template<typename T>
+Matrix<T> divide(Matrix<T> &matrix, T element) {
+    return matrix / element;
+}
+
+/*template <class T>
 Matrix<T> add(Matrix<T>& A, Matrix<T>& B)
 {
-    if (A.is_empty())
-    {
-        time_t t_time;
-        t_time = time(nullptr);
-        throw is_empty_exception(__FILE__, typeid(A).name(), __LINE__ - 4, ctime(&t_time), "Matrix A is Empty");
-    }
-    if (B.is_empty())
-    {
-        time_t t_time;
-        t_time = time(nullptr);
-        throw is_empty_exception(__FILE__, typeid(B).name(), __LINE__ - 4, ctime(&t_time), "Matrix B is Empty");
-    }
-    if (A != B)
-    {
-        time_t t_time;
-        t_time = time(nullptr);
-        throw is_empty_exception(__FILE__, typeid(A).name(), __LINE__ - 4, ctime(&t_time), "Matrix A != B");
-    }
-    Matrix<T> C = A;
-    for (size_t i = 0; i < B.GetRows(); ++i)
-        for (size_t j = 0; j < B.GetColumns(); ++j)
-            C[i][j] += B[i][j];
-    return C;
+    return A + B;
 }
 
 template <class T>
@@ -844,49 +857,9 @@ Matrix<T> sub(Matrix<T>& matrix, T element)
 template<class T>
 Matrix<T> mult(Matrix<T>& matrix, T element)
 {
-    if (matrix.is_empty())
-    {
-        time_t t_time;
-        t_time = time(nullptr);
-        throw is_empty_exception(__FILE__, typeid(matrix).name(), __LINE__ - 4, ctime(&t_time), "Matrix is empty");
-    }
-    for (size_t i = 0; i < matrix.get_rows(); ++i)
-        for (size_t j = 0; j < matrix.getc_columns(); ++j)
-            matrix[i][j] *= element;
-    return matrix;
+    return matrix * element;
 }
 
-template <class T>
-Matrix<T> mult(Matrix<T>& A, Matrix<T>& B)
-{
-    if (A.is_empty())
-    {
-        time_t t_time;
-        t_time = time(nullptr);
-        throw is_empty_exception(__FILE__, typeid(A).name(), __LINE__ - 4, ctime(&t_time), "Matrix A is empty");
-    }
-    if (B.is_empty())
-    {
-        time_t t_time;
-        t_time = time(nullptr);
-        throw is_empty_exception(__FILE__, typeid(B).name(), __LINE__ - 4, ctime(&t_time), "Matrix B is empty");
-    }
-    if (A.GetColumns() != B.get_rows())
-    {
-        time_t t_time;
-        t_time = time(nullptr);
-        throw cannot_mult_matrix_exception(__FILE__, typeid(A).name(), __LINE__ - 4, ctime(&t_time),"You cannot mult these elements");
-    }
-    Matrix<T> C(A.get_rows(), B.get_columns());
-    for (size_t i = 0; i < C.get_rows(); ++i)
-        for (size_t j = 0; j < C.GetColumns(); ++j)
-        {
-            C[i][j] = 0;
-            for (size_t k = 0; k < A.get_columns(); ++k)
-                C[i][j] += A[i][k] * B[k][j];
-        }
-    return C;
-}
 
 template <class T>
 Matrix<T> divide(Matrix<T>& matrix, T element)
@@ -901,6 +874,6 @@ Matrix<T> divide(Matrix<T>& matrix, T element)
         for (size_t j = 0; j < matrix.getc_columns(); ++j)
             matrix[i][j] /= element;
     return matrix;
-}
+}*/
 
 #endif /* matrix_math_h */

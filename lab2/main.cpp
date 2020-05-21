@@ -31,9 +31,8 @@ int main() {
         B -= A;
         cout << B;
 
-        B *= A;
+        B = mult(A, B);
         cout << B;
-
 
 
         Matrix<int> C({{1, 2, 3},

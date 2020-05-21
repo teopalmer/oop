@@ -40,13 +40,15 @@ int main() {
 
         cout << "Тестирование получения элемента по индексу\n\n";
         int value = C.get_value_by_index(0, 0);
-        std::cout << "Полученное значение:  " << value << std::endl;
+        int val = C[0][0];
+        std::cout << val;
+        std::cout << value << std::endl;
 
-        cout << "\nТестирование проверки на квадратную матрицу\n\n";
+        cout << "\nКвадратная?\n\n";
         bool issquare = C.is_square();
         cout << C << (issquare ? "Квадратная" : "Не квадратная") << std::endl;
 
-        cout << "\nТестирование транспонирования матрицы\n\n";
+        cout << "\nТранспонирование\n\n";
         Matrix<int> F({{1, 1, 1, 1, 1},
                           {2, 2, 2, 2, 2},
                           {3, 3, 3, 3, 3},
@@ -57,7 +59,10 @@ int main() {
         Matrix<int> FT = F.transposition();
         cout << FT;
 
-        cout << "\nТестирование умножения матриц\n\n";
+        FT.inverse_gauss();
+        cout << FT;
+
+        cout << "\nУмножение\n\n";
         Matrix<int> D(4, 4);
         A = A * D;
         cout << D;

@@ -74,7 +74,7 @@ public:
     const_iterator<T> end() const;
     
     Matrix<T> &clone_matrix();
-    Matrix<T> inverse_gauss();  //обратная матрица методом Гаусса-Жордана
+    Matrix<T> inverse_gauss();
     Matrix<T> &transposition();
   
     static Matrix<T> matrix_det(size_t count, size_t exclude_row, size_t exclude_column, const Matrix<T>& matrix);
@@ -99,7 +99,7 @@ public:
                 t_time = time(nullptr);
                 throw index_out_of_range_exception(__FILE__, typeid(*this).name(), __LINE__ - 4, ctime(&t_time), "Index out of range");
             }
-            return parent.matrix[row][col];
+            return parent.mtr.get()[row * parent.m + col];
         }
         
         T& operator[](size_t col)
@@ -110,7 +110,7 @@ public:
                 t_time = time(nullptr);
                 throw index_out_of_range_exception(__FILE__, typeid(*this).name(), __LINE__ - 4, ctime(&t_time), "Index out of range");
             }
-            return parent.matrix[row][col];
+            return parent.mtr.get()[row * parent.m + col];
         }
     private:
         Row(const Matrix<T> &parent, size_t row) : parent(parent), row(row) {}

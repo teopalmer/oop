@@ -18,7 +18,7 @@ public:
     const ValueType &operator *() const;
     const ValueType *operator ->() const;
     
-    matrix_iterator(ValueType *);
+    explicit matrix_iterator(ValueType *);
 };
 
 #endif /* matrix_iterator_h */

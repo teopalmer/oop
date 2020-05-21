@@ -12,7 +12,7 @@ public:
     const_iterator(const const_iterator<ValueType>&);
     const ValueType& operator *() const;
     const ValueType* operator ->() const;
-    const_iterator(ValueType*);
+    explicit const_iterator(ValueType*);
 };
 
 #endif /* const_iterator_h */

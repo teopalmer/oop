@@ -647,7 +647,7 @@ void Matrix<T>::identity_matrix()
 }
 
 template <class T>
-static Matrix<T> matrix_det(size_t count, size_t exclude_row, size_t exclude_column, const Matrix<T>& matrix)
+static Matrix<T>matrix_det(size_t count, size_t exclude_row, size_t exclude_column, const Matrix<T>& matrix)
 {
     Matrix<T> new_matrix(count - 1, count - 1);
     size_t ki = 0, kj = 0;
@@ -684,7 +684,7 @@ static T determinant_value(const size_t count, const Matrix<T>& matrix)
 }
 
 template <class T>
-T Matrix<T>::determinant(void)
+T Matrix<T>::determinant()
 {
     if (!this->IsSquare())
     {

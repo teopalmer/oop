@@ -31,7 +31,7 @@ public:
     
     Matrix<T>& operator =(const Matrix<T> &mtr);
     Matrix<T>& operator =(Matrix<T> &&mtr);
-    Matrix<T>& operator =(std::initializer_list<std::initializer_list<T>> lst);
+    //Matrix<T>& operator =(std::initializer_list<std::initializer_list<T>> lst);
     
     unsigned int get_n() const;
     unsigned int get_m() const;
@@ -59,13 +59,13 @@ public:
     template<typename _T>
     friend std::ostream& operator <<(std::ostream& os, const Matrix<_T>& matr);
 
-    Matrix<T> add(Matrix<T>& A, Matrix<T>& B);
-    Matrix<T> add(Matrix<T>& matrix, T element);
-    Matrix<T> sub(Matrix<T>& A, Matrix<T>& B);
-    Matrix<T> sub(Matrix<T>& matrix, T element);
-    Matrix<T> mult(Matrix<T>& A, Matrix<T>& B);
-    Matrix<T> mult(Matrix<T>& matrix, T element);
-    Matrix<T> divide(Matrix<T>& matrix, T element);
+    void add(Matrix<T>& A);
+    void add(T element);
+    void sub(Matrix<T>& A);
+    void sub(T element);
+    void mult(Matrix<T>& A);
+    void mult(T element);
+    void divide(T element);
     
     matrix_iterator<T> begin();
     matrix_iterator<T> end();
@@ -73,7 +73,7 @@ public:
     const_iterator<T> begin() const;
     const_iterator<T> end() const;
     
-    Matrix<T> &clone_matrix();
+    void clone_matrix(const Matrix<T>& matrix);
     Matrix<T> inverse_gauss();
     Matrix<T> &transposition();
   
@@ -83,9 +83,7 @@ public:
     
     void set_value_by_index(unsigned int i, unsigned int j, const T& value);
     bool is_square();
-    void auto_fill();
-    void fill(float fill);
-    void identity_matrix(); //единичная матрица
+    void identity_matrix();
     
     class Row
     {
@@ -101,7 +99,7 @@ public:
             }
             return parent.mtr.get()[row * parent.m + col];
         }
-        
+
         T& operator[](size_t col)
         {
             if (col >= this->parent.get_columns())
@@ -130,6 +128,8 @@ public:
     }
     
 private:
+    void auto_fill();
+    void fill(float fill);
     unsigned int n{};
     unsigned int m{};
     std::shared_ptr<T> mtr;

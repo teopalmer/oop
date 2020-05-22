@@ -124,7 +124,7 @@ Matrix<T>::Matrix(std::initializer_list<std::initializer_list<T>> lst)
     {
         this->mtr = std::shared_ptr<T>(new T[n * m]);
     }
-    catch (std::bad_alloc)
+    catch (std::bad_alloc&)
     {
         throw is_empty_exception(__FILE__, typeid(*this).name(), __LINE__ - 4, ctime(&t_time), "Allocation memory error");
     }
@@ -200,13 +200,13 @@ Matrix<T>& Matrix<T>::operator =(const Matrix<T> &mtr)
     unsigned int m_mtr = mtr.get_m();
     this->n = n_mtr;
     this->m = m_mtr;
-    this->elements_count = mtr.elements_num;
+    this->elements_count = mtr.elements_count;
     try
     {
         this->mtr = std::shared_ptr<T>(new T[n * m]);
     }
     
-    catch (std::bad_alloc)
+    catch (std::bad_alloc&)
     {
         throw is_empty_exception(__FILE__, typeid(*this).name(), __LINE__ - 4, ctime(&t_time), "Allocation memory error");
     }
@@ -245,7 +245,7 @@ Matrix<T> &Matrix<T>::operator =(Matrix<T> &&mtr)
         this->mtr = std::shared_ptr<T>(new T[n * m]);
     }
     
-    catch (std::bad_alloc)
+    catch (std::bad_alloc&)
     {
         throw is_empty_exception(__FILE__, typeid(*this).name(), __LINE__ - 4, ctime(&t_time), "Allocation memory error");
     }
@@ -535,26 +535,9 @@ Matrix<T> Matrix<T>::inverse_gauss()
 }
 
 template<typename T>
-Matrix<T> &Matrix<T>::clone_matrix()
+void Matrix<T>::clone_matrix(const Matrix<T>& matrix)
 {
-    time_t t_time;
-    t_time = time(nullptr);
-    if (n != m) throw is_empty_exception(__FILE__, typeid(*this).name(), __LINE__ - 4, ctime(&t_time), "Sizes should be equal");
-    for (unsigned int i = 0; i < n; i++)
-    {
-        for (unsigned int j = 0; j < m; j++)
-        {
-            if (i == j)
-            {
-                mtr.get()[i *m + j] = 1;
-            }
-            else
-            {
-                mtr.get()[i *m + j] = 0;
-            }
-        }
-    }
-    return *this;
+    *this = matrix;
 }
 
 template<typename T>
@@ -647,7 +630,7 @@ void Matrix<T>::identity_matrix()
 }
 
 template <class T>
-static Matrix<T>matrix_det(size_t count, size_t exclude_row, size_t exclude_column, const Matrix<T>& matrix)
+Matrix<T> Matrix<T>::matrix_det(size_t count, size_t exclude_row, size_t exclude_column, const Matrix<T>& matrix)
 {
     Matrix<T> new_matrix(count - 1, count - 1);
     size_t ki = 0, kj = 0;
@@ -665,7 +648,7 @@ static Matrix<T>matrix_det(size_t count, size_t exclude_row, size_t exclude_colu
     return new_matrix;
 }
 template <class T>
-static T determinant_value(const size_t count, const Matrix<T>& matrix)
+T Matrix<T>::determinant_value(const size_t count, const Matrix<T>& matrix)
 {
     size_t sign = 1, new_count = count - 1;
     T det = 0;
@@ -697,7 +680,7 @@ T Matrix<T>::determinant()
 }
 
 template<typename _T>
-std::ostream& operator <<(std::ostream& os, const Matrix<_T>& matr)
+std::ostream& operator << (std::ostream& os, const Matrix<_T>& matr)
 {
     for (unsigned int i = 0; i < matr.get_n(); i++)
     {
@@ -756,38 +739,39 @@ Matrix<T>::Matrix(unsigned int n, unsigned int m, float fill) {
 }
 
 template<typename T>
-Matrix<T> add(Matrix<T> &A, Matrix<T> &B) {
-    return A + B;
+void Matrix<T>::add(Matrix<T> &A) {
+    *this = *this + A;
 }
 
 template<typename T>
-Matrix<T> add(Matrix<T> &matrix, T element) {
-    return matrix + element;
+void Matrix<T>::add(T element) {
+    *this = *this + element;
 }
 
 template<typename T>
-Matrix<T> sub(Matrix<T> &A, Matrix<T> &B) {
-    return A - B;
+void Matrix<T>::sub(Matrix<T> &A) {
+    *this = *this - A;
 }
 
 template<typename T>
-Matrix<T> sub(Matrix<T> &matrix, T element) {
-    return matrix - element;
+void Matrix<T>::sub(T element) {
+    *this = *this - element;
 }
 
 template<typename T>
-Matrix<T> mult(Matrix<T>& A, Matrix<T>& B) {
-    return A * B;
+void Matrix<T>::mult(Matrix<T>& A) {
+    *this = *this * A;
 }
 
 template<typename T>
-Matrix<T> mult(Matrix<T> &matrix, T element) {
-    return matrix * element;
+void Matrix<T>::mult(T element) {
+    *this = *this * element;
 }
 
 template<typename T>
-Matrix<T> divide(Matrix<T> &matrix, T element) {
-    return matrix / element;
+void Matrix<T>::divide(T element)
+{
+    *this = *this / element;
 }
 
 /*template <class T>

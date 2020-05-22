@@ -10,7 +10,7 @@ using namespace std;
 
 int main() {
     try {
-        cout << "Конструкторы\n\n";
+        cout << "Constructors\n\n";
 
         Matrix<int> A(4, 4); //обычный
         cout << A;
@@ -23,32 +23,39 @@ int main() {
         Matrix<int> B(A); //копирование
         cout << B;
 
-        cout << "Сложение\n\n";
+        cout << "Addition\n\n";
         B += A;
         cout << B;
 
-        cout << "Тестирование вычитания\n\n";
+        cout << "Substraction\n\n";
         B -= A;
         cout << B;
 
-        B = mult(A, B);
+        B.mult(A);
         cout << B;
+
+        Matrix<int> Pk(2, 2);
+        Pk.clone_matrix(B);
+        cout << Pk;
+
+        A = {{0, 1}, {2,3}};
+        cout << A;
 
 
         Matrix<int> C({{1, 2, 3},
                           {4, 5, 6}});
 
-        cout << "Тестирование получения элемента по индексу\n\n";
+        cout << "Get value by index\n\n";
         int value = C.get_value_by_index(0, 0);
         int val = C[0][0];
         std::cout << val;
         std::cout << value << std::endl;
 
-        cout << "\nКвадратная?\n\n";
+        cout << "\nIs square?\n\n";
         bool issquare = C.is_square();
-        cout << C << (issquare ? "Квадратная" : "Не квадратная") << std::endl;
+        cout << C << (issquare ? "Square" : "Not square") << std::endl;
 
-        cout << "\nТранспонирование\n\n";
+        cout << "\nTransposition\n\n";
         Matrix<int> F({{1, 1, 1, 1, 1},
                           {2, 2, 2, 2, 2},
                           {3, 3, 3, 3, 3},
@@ -62,13 +69,14 @@ int main() {
         FT.inverse_gauss();
         cout << FT;
 
-        cout << "\nУмножение\n\n";
+        cout << "\nMultiplication\n\n";
         Matrix<int> D(4, 4);
         A = A * D;
         cout << D;
         Matrix<int> E(2, 2);
         B = D * E;
         cout << B;
+
     }
     catch (base_exception &exception) {
         cout << exception.what();

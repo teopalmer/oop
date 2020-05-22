@@ -31,7 +31,7 @@ class is_not_equal_exception : public base_exception
 public:
     is_not_equal_exception(std::string filename, std::string classname, int line, const char *time, std::string info)
     : base_exception(filename, classname, line, time, info) {};
-    std::string what() {return "Matrix is not equal\n" + this->err_info;}
+    std::string what() {return "Matrices are not equal\n" + this->err_info;}
 };
 
 class is_empty_exception : public base_exception
@@ -47,7 +47,7 @@ class cannot_mult_matrix_exception : public base_exception
 public:
     cannot_mult_matrix_exception(std::string filename, std::string classname, int line, const char *time, std::string info)
     : base_exception(filename, classname, line, time, info) {};
-    std::string what() {return "Cannot mult matrix\n" + this->err_info;}
+    std::string what() {return "Can't multiply matrices\n" + this->err_info;}
 };
 
 class is_not_square_exception : public base_exception

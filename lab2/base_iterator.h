@@ -1,5 +1,4 @@
-#ifndef base_iterator_h
-#define base_iterator_h
+#pragma once
 
 #include <stdio.h>
 
@@ -30,5 +29,3 @@ namespace iterator_core
 }
 
 #include "base_iterator_math.h"
-
-#endif /* base_iterator_h */

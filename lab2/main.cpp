@@ -63,11 +63,11 @@ int main() {
                           {5, 5, 5, 5, 5}});
         F.transposition();
         cout << F;
-        Matrix<int> FT = F.transposition();
-        cout << FT;
+        //Matrix<int> FT = F.transposition();
+        //cout << FT;
 
-        FT.inverse_gauss();
-        cout << FT;
+        //FT.inverse();
+        //cout << FT;
 
         cout << "\nMultiplication\n\n";
         Matrix<int> D(4, 4);
@@ -78,7 +78,7 @@ int main() {
         cout << B;
 
     }
-    catch (base_exception &exception) {
+    catch (base_matrix_exception &exception) {
         cout << exception.what();
     }
 

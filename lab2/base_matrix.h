@@ -5,12 +5,12 @@
 
 namespace matrix_core
 {
-    class base_matrix
+    class base_matrix //хотя бы один виртуальный метод
     {
     public:
         explicit base_matrix();
         explicit base_matrix(size_t);
-        virtual ~base_matrix();
+        virtual ~base_matrix() = 0;
         bool is_empty() const;
         size_t get_rows() const {return this->rows;}
         size_t get_columns() const {return this->columns;}

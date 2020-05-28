@@ -62,7 +62,7 @@ Matrix<T>::Matrix(const Matrix<T> &mtr):base_matrix()
     }
 }
 template<typename T>
-Matrix<T>::Matrix(Matrix<T>&& mtr)
+Matrix<T>::Matrix(Matrix<T>&& mtr) noexcept
 {
     time_t t_time;
     t_time = time(nullptr);
@@ -482,7 +482,7 @@ T &Matrix<T>::operator ()(unsigned int i, unsigned int j)
 }
 
 template<typename T>
-Matrix<T> Matrix<T>::inverse_gauss()
+Matrix<T> Matrix<T>::inverse()
 {
     time_t t_time;
     t_time = time(nullptr);
@@ -773,6 +773,63 @@ void Matrix<T>::divide(T element)
 {
     *this = *this / element;
 }
+
+template<typename T>
+const_iterator<T> Matrix<T>::cend() const {
+    return const_iterator<T>(mtr + n * m);
+}
+
+template<typename T>
+const_iterator<T> Matrix<T>::cbegin() const {
+    return const_iterator<T>(mtr + n * m);
+}
+
+template<typename T>
+Matrix<T> Matrix<T>::transposition(Matrix<T> matr) {
+    time_t t_time;
+    t_time = time(nullptr);
+    if (this->get_m() == this->get_n())
+    {
+        for (unsigned int i = 0; i < 4; i++)
+        {
+            for (unsigned int j = i + 1; j <= 4; j++)
+            {
+                matr->mtr.get()[i * m + j] = this->mtr.get()[j * m + i];
+                matr->mtr.get()[j * m + i] = this->mtr.get()[i * m + j];
+            }
+        }
+        return *matr;
+    }
+    else
+    {
+        throw is_empty_exception(__FILE__, typeid(*matr).name(), __LINE__ - 4, ctime(&t_time), "Sizes should be equal");
+    }
+}
+
+
+template<typename T>
+const typename Matrix<T>::Row Matrix<T>::operator[](size_t row) const {
+    if (row >= this->get_rows())
+    {
+        time_t t_time;
+        t_time = time(nullptr);
+        throw index_out_of_range_exception(__FILE__, typeid(*this).name(), __LINE__ - 4, ctime(&t_time), "Index out of range");
+    }
+    return Row(*this, row);
+}
+
+template<typename T>
+typename Matrix<T>::Row Matrix<T>::operator[](size_t row){
+    if (row >= this->get_rows())
+    {
+        time_t t_time;
+        t_time = time(nullptr);
+        throw index_out_of_range_exception(__FILE__, typeid(*this).name(), __LINE__ - 4, ctime(&t_time), "Index out of range");
+    }
+    return Row(*this, row);
+}
+
+
 
 /*template <class T>
 Matrix<T> add(Matrix<T>& A, Matrix<T>& B)

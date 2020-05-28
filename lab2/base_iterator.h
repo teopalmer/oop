@@ -14,7 +14,7 @@ namespace iterator_core
         base_iterator();
         base_iterator(const base_iterator<ValueType>&);
         explicit base_iterator(ValueType*);
-        virtual ~base_iterator();
+        virtual ~base_iterator() = 0;
         base_iterator<ValueType>& operator =(const base_iterator<ValueType>&);
         base_iterator<ValueType>& operator ++();
         base_iterator<ValueType> operator ++(int);
@@ -25,7 +25,7 @@ namespace iterator_core
     protected:
         unsigned int count;
         int index;
-        ValueType *ptr;
+        weak_ptr<ValueType[]> ptr; //shared weak
     };
 }
 

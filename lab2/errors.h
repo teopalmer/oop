@@ -5,57 +5,57 @@
 #include <exception>
 #include <string.h>
 
-class base_exception : public std::exception
+class base_matrix_exception : public std::exception //base_matrix nam
 {
 public:
-    base_exception(std::string filename, std::string classname, int line, const char *time, std::string info)
+    base_matrix_exception(std::string filename, std::string classname, int line, const char *time, std::string info)
     {
-        err_info = "filename: " + filename + "\nline: " + std::to_string(line)
-        + "\ntime: " + time + "\ninfo: " + info;
+        err_info = "\nError: " + info + "\nfilename: " + filename + "\nline: " + std::to_string(line)
+        + "\ntime: " + time ;
     }
-    virtual std::string what() {return "MyBaseException.\n" + this->err_info;};
+    const char *what() const noexcept override {return (this->err_info).c_str();}; //const
 protected:
     std::string err_info;
 };
 
-class index_out_of_range_exception : public base_exception
+class index_out_of_range_exception : public base_matrix_exception
 {
 public:
     index_out_of_range_exception(std::string filename, std::string classname, int line, const char *time, std::string info)
-    : base_exception(filename, classname, line, time, info) {};
-    std::string what() {return "Index out of range.\n" + this->err_info;}
+    : base_matrix_exception(filename, classname, line, time, info) {};
+    const char *what() const noexcept override {return (this->err_info).c_str();}
 };
 
-class is_not_equal_exception : public base_exception
+class is_not_equal_exception : public base_matrix_exception
 {
 public:
     is_not_equal_exception(std::string filename, std::string classname, int line, const char *time, std::string info)
-    : base_exception(filename, classname, line, time, info) {};
-    std::string what() {return "Matrices are not equal\n" + this->err_info;}
+    : base_matrix_exception(filename, classname, line, time, info) {};
+    const char *what() const noexcept override {return (this->err_info).c_str();}
 };
 
-class is_empty_exception : public base_exception
+class is_empty_exception : public base_matrix_exception
 {
 public:
     is_empty_exception(std::string filename, std::string classname, int line, const char *time, std::string info)
-    : base_exception(filename, classname, line, time, info) {};
-    std::string what() {return "Matrix is empty\n" + this->err_info;}
+    : base_matrix_exception(filename, classname, line, time, info) {};
+    const char *what() const noexcept override {return (this->err_info).c_str();}
 };
 
-class cannot_mult_matrix_exception : public base_exception
+class cannot_mult_matrix_exception : public base_matrix_exception
 {
 public:
     cannot_mult_matrix_exception(std::string filename, std::string classname, int line, const char *time, std::string info)
-    : base_exception(filename, classname, line, time, info) {};
-    std::string what() {return "Can't multiply matrices\n" + this->err_info;}
+    : base_matrix_exception(filename, classname, line, time, info) {};
+    const char *what() const noexcept override {return (this->err_info).c_str();}
 };
 
-class is_not_square_exception : public base_exception
+class is_not_square_exception : public base_matrix_exception
 {
 public:
     is_not_square_exception(std::string filename, std::string classname, int line, const char *time, std::string info)
-    : base_exception(filename, classname, line, time, info) {};
-    std::string what(void) {return "Matrix is not square\n" + this->err_info;}
+    : base_matrix_exception(filename, classname, line, time, info) {};
+    const char *what() const noexcept override {return (this->err_info).c_str();}
 };
 
 #endif /* errors_h */

@@ -41,9 +41,9 @@ base_iterator<ValueType>& base_iterator<ValueType>::operator =(const base_iterat
 template<typename ValueType>
 base_iterator<ValueType>& base_iterator<ValueType>::operator ++()
 {
-    ++this->ptr;
-    
-    return *this;
+    base_iterator <ValueType> tmp = *this;
+    ++(*this);
+    return tmp;
 }
 
 template<typename ValueType>

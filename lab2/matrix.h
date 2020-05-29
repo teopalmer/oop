@@ -21,7 +21,7 @@ class Matrix : public matrix_core::base_matrix
 {
 public:
     Matrix(unsigned int n, unsigned int m); //финализатор
-    Matrix(unsigned int n, unsigned int m, float fill); //T
+    Matrix(unsigned int n, unsigned int m, T fill); //T
     //Matrix(unsigned int n, unsigned int m, T** matrix);
     explicit Matrix(const Matrix<T> &mtr);
     Matrix(Matrix<T>&& mtr) noexcept ;
@@ -32,18 +32,18 @@ public:
     ~Matrix();
 
     Matrix<T>& operator =(const Matrix<T> &mtr);
-    Matrix<T>& operator =(Matrix<T> &&mtr);
-    //Matrix<T>& operator =(std::initializer_list<std::initializer_list<T>> lst);
+    Matrix<T>& operator =(Matrix<T> &&mtr) noexcept ;
 
-    unsigned int get_n() const; //row
-    unsigned int get_m() const; //column
+    unsigned int get_row() const; //row
+    unsigned int get_column() const; //column
 
-    const T& get_value_by_index(unsigned int i, unsigned int j) const; // not const
+    const T& get_value_by_index(unsigned int i, unsigned int j) const;
+    T& get_value_by_index(unsigned int i, unsigned int j);// not const
+
     void set_value_by_index(unsigned int i, unsigned int j, const T& value);
     //name
     T& operator ()(unsigned int i, unsigned int j);
     const T& operator ()(unsigned int i, unsigned int j) const;
-    //opertir[]
 
     Matrix<T> operator -(const Matrix<T> &mtr1) const; //group
     Matrix<T> operator -(const T& num) const;
@@ -71,19 +71,19 @@ public:
 
     matrix_iterator<T> begin();
     const_iterator<T> begin() const;
-    const_iterator<T> cbegin() const;
+    matrix_iterator<T> cbegin() const;
 
     matrix_iterator<T> end();
     const_iterator<T> end() const;
-    const_iterator<T> cend() const;
+    matrix_iterator<T> cend() const;
 
     void clone_matrix(const Matrix<T>& matrix);
     Matrix<T> inverse(); //name
     Matrix<T> &transposition();
     Matrix<T> transposition(Matrix<T> matr); //transpon new matrix
 
-    static Matrix<T> matrix_det(size_t count, size_t exclude_row, size_t exclude_column, const Matrix<T>& matrix);
-    static T determinant_value(const size_t count, const Matrix<T>& matrix); //-count
+    static Matrix<T> matrix_det(size_t exclude_row, size_t exclude_column, const Matrix<T>& matrix);
+    static T determinant_value(const Matrix<T>& matrix); //-count
     T determinant();
 
 
@@ -104,16 +104,7 @@ public:
     };
 
     const Matrix::Row operator[] (size_t row) const;
-    Matrix::Row operator[] (size_t row);//+non const
-    /*{
-        if (row >= this->get_rows())
-        {
-            time_t t_time;
-            t_time = time(nullptr);
-            throw index_out_of_range_exception(__FILE__, typeid(*this).name(), __LINE__ - 4, ctime(&t_time), "Index out of range");
-        }
-        return Row(*this, row);
-    }*/
+    Matrix::Row operator[] (size_t row);
     
 private:
     void auto_fill();

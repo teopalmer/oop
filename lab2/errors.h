@@ -1,9 +1,9 @@
 #ifndef errors_h
 #define errors_h
 
-#include <stdio.h>
+#include <cstdio>
 #include <exception>
-#include <string.h>
+#include <cstring>
 
 class base_matrix_exception : public std::exception //base_matrix nam
 {

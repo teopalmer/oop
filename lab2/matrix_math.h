@@ -40,8 +40,8 @@ Matrix<T>::Matrix(const Matrix<T> &mtr):base_matrix()
 {
     time_t t_time;
     t_time = time(nullptr);
-    this->n = mtr.get_n();
-    this->m = mtr.get_m();
+    this->n = mtr.get_row();
+    this->m = mtr.get_column();
     this->elements_count = mtr.size();
     
     try
@@ -66,8 +66,8 @@ Matrix<T>::Matrix(Matrix<T>&& mtr) noexcept
 {
     time_t t_time;
     t_time = time(nullptr);
-    this->n = mtr.get_n();
-    this->m = mtr.get_m();
+    this->n = mtr.get_row();
+    this->m = mtr.get_column();
     this->elements_count = mtr.size();
     try
     {
@@ -196,8 +196,8 @@ Matrix<T>& Matrix<T>::operator =(const Matrix<T> &mtr)
 {
     time_t t_time;
     t_time = time(nullptr);
-    unsigned int n_mtr = mtr.get_n();
-    unsigned int m_mtr = mtr.get_m();
+    unsigned int n_mtr = mtr.get_row();
+    unsigned int m_mtr = mtr.get_column();
     this->n = n_mtr;
     this->m = m_mtr;
     this->elements_count = mtr.elements_count;
@@ -231,12 +231,12 @@ Matrix<T>& Matrix<T>::operator =(const Matrix<T> &mtr)
 }
 
 template<typename T>
-Matrix<T> &Matrix<T>::operator =(Matrix<T> &&mtr)
+Matrix<T> &Matrix<T>::operator =(Matrix<T> &&mtr) noexcept
 {
     time_t t_time;
     t_time = time(nullptr);
-    unsigned int n_mtr = mtr.get_n();
-    unsigned int m_mtr = mtr.get_m();
+    unsigned int n_mtr = mtr.get_row();
+    unsigned int m_mtr = mtr.get_column();
     this->n = n_mtr;
     this->m = m_mtr;
     this->elements_count = mtr.elements_count;
@@ -273,8 +273,8 @@ Matrix<T> &Matrix<T>::operator +=(const Matrix<T> &mtr)
 {
     time_t t_time;
     t_time = time(nullptr);
-    unsigned int n_mtr = mtr.get_n();
-    unsigned int m_mtr = mtr.get_m();
+    unsigned int n_mtr = mtr.get_row();
+    unsigned int m_mtr = mtr.get_column();
     if (this->m == m_mtr && this->n == n_mtr)
     {
         for (unsigned int i = 0; i < n_mtr; i++)
@@ -296,8 +296,8 @@ Matrix<T> &Matrix<T>::operator -=(const Matrix<T> &mtr)
 {
     time_t t_time;
     t_time = time(nullptr);
-    unsigned int n_mtr = mtr.get_n();
-    unsigned int m_mtr = mtr.get_m();
+    unsigned int n_mtr = mtr.get_row();
+    unsigned int m_mtr = mtr.get_column();
     if (this->m == m_mtr && this->n == n_mtr)
     {
         for (unsigned int i = 0; i < n_mtr; i++)
@@ -321,15 +321,15 @@ Matrix<T> Matrix<T>::operator +(const Matrix<T> &mtr1) const
 {
     time_t t_time;
     t_time = time(nullptr);
-    if (mtr1.get_n() == this->n && mtr1.get_n() == this->m)
+    if (mtr1.get_row() == this->n && mtr1.get_row() == this->m)
     {
         
-        Matrix<T> res(mtr1.get_n(), mtr1.get_m());
-        for (unsigned int i = 0; i < res.get_n(); ++i)
+        Matrix<T> res(mtr1.get_row(), mtr1.get_column());
+        for (unsigned int i = 0; i < res.get_row(); ++i)
         {
-            for (unsigned int j = 0; j < res.get_m(); ++j)
+            for (unsigned int j = 0; j < res.get_column(); ++j)
             {
-                res.mtr.get()[i * mtr1.get_m() + j] = this->mtr.get()[i * mtr1.get_m() + j] + mtr1.mtr.get()[i * mtr1.get_m() + j];
+                res.mtr.get()[i * mtr1.get_column() + j] = this->mtr.get()[i * mtr1.get_column() + j] + mtr1.mtr.get()[i * mtr1.get_column() + j];
             }
         }
         return res;
@@ -360,14 +360,14 @@ Matrix<T> Matrix<T>::operator -(const Matrix<T> &mtr1) const
 {
     time_t t_time;
     t_time = time(nullptr);
-    if (mtr1.get_n() == this->n && mtr1.get_n() == this->m)
+    if (mtr1.get_row() == this->n && mtr1.get_row() == this->m)
     {
-        Matrix<T> res = Matrix<T>(mtr1.get_n(), mtr1.get_m());
-        for (unsigned int i = 0; i < res.get_n(); ++i)
+        Matrix<T> res = Matrix<T>(mtr1.get_row(), mtr1.get_column());
+        for (unsigned int i = 0; i < res.get_row(); ++i)
         {
-            for (unsigned int j = 0; j < res.get_m(); ++j)
+            for (unsigned int j = 0; j < res.get_column(); ++j)
             {
-                res.mtr.get()[i * mtr1.get_m() + j] = this->mtr.get()[i * this->m + j] - mtr1.mtr.get()[i * mtr1.get_m() + j];
+                res.mtr.get()[i * mtr1.get_column() + j] = this->mtr.get()[i * this->m + j] - mtr1.mtr.get()[i * mtr1.get_column() + j];
             }
         }
         return res;
@@ -400,10 +400,10 @@ Matrix<T> Matrix<T>::operator *(const Matrix<T> &mtr1) const
 {
     time_t t_time;
     t_time = time(nullptr);
-    if (mtr1.get_m() == this->n)
+    if (mtr1.get_column() == this->n)
     {
         unsigned int n = this->n;
-        unsigned int m = mtr1.get_m();
+        unsigned int m = mtr1.get_column();
         unsigned int l = this->n;
         Matrix<T> res = Matrix<T>(n, m);
         for (unsigned int i = 0; i < n; i++)
@@ -545,7 +545,7 @@ Matrix<T>& Matrix<T>::transposition()
 {
     time_t t_time;
     t_time = time(nullptr);
-    if (this->get_m() == this->get_n())
+    if (this->get_column() == this->get_row())
     {
         for (unsigned int i = 0; i < 4; i++)
         {
@@ -578,13 +578,13 @@ bool Matrix<T>::is_square()
 }
 
 template<typename T>
-unsigned int Matrix<T>::get_n() const
+unsigned int Matrix<T>::get_row() const
 {
     return this->n;
 }
 
 template<typename T>
-unsigned int Matrix<T>::get_m() const
+unsigned int Matrix<T>::get_column() const
 {
     return this->m;
 }
@@ -630,8 +630,9 @@ void Matrix<T>::identity_matrix()
 }
 
 template <class T>
-Matrix<T> Matrix<T>::matrix_det(size_t count, size_t exclude_row, size_t exclude_column, const Matrix<T>& matrix)
+Matrix<T> Matrix<T>::matrix_det(size_t exclude_row, size_t exclude_column, const Matrix<T>& matrix)
 {
+    size_t count = matrix.count;
     Matrix<T> new_matrix(count - 1, count - 1);
     size_t ki = 0, kj = 0;
     for (size_t i = 0; i < count - 1; ++i)
@@ -648,8 +649,9 @@ Matrix<T> Matrix<T>::matrix_det(size_t count, size_t exclude_row, size_t exclude
     return new_matrix;
 }
 template <class T>
-T Matrix<T>::determinant_value(const size_t count, const Matrix<T>& matrix)
+T Matrix<T>::determinant_value(const Matrix<T>& matrix)
 {
+    size_t count = matrix.count;
     size_t sign = 1, new_count = count - 1;
     T det = 0;
     if (count == 1)
@@ -682,11 +684,11 @@ T Matrix<T>::determinant()
 template<typename _T>
 std::ostream& operator << (std::ostream& os, const Matrix<_T>& matr)
 {
-    for (unsigned int i = 0; i < matr.get_n(); i++)
+    for (unsigned int i = 0; i < matr.get_row(); i++)
     {
-        for(unsigned int j = 0; j < matr.get_m(); j++)
+        for(unsigned int j = 0; j < matr.get_column(); j++)
         {
-            os << matr.mtr.get()[i * matr.get_m() + j] << " ";
+            os << matr.mtr.get()[i * matr.get_column() + j] << " ";
         }
         os << std::endl;
     }
@@ -718,7 +720,7 @@ const_iterator<T> Matrix<T>::end() const
 }
 
 template<typename T>
-Matrix<T>::Matrix(unsigned int n, unsigned int m, float fill) {
+Matrix<T>::Matrix(unsigned int n, unsigned int m, T fill) {
     time_t t_time;
     t_time = time(nullptr);
     if (n == 0 || m == 0) throw index_out_of_range_exception(__FILE__, typeid(*this).name(), __LINE__ - 4, ctime(&t_time), "Incorrect size");
@@ -775,12 +777,12 @@ void Matrix<T>::divide(T element)
 }
 
 template<typename T>
-const_iterator<T> Matrix<T>::cend() const {
+matrix_iterator<T> Matrix<T>::cend() const {
     return const_iterator<T>(mtr + n * m);
 }
 
 template<typename T>
-const_iterator<T> Matrix<T>::cbegin() const {
+matrix_iterator<T> Matrix<T>::cbegin() const {
     return const_iterator<T>(mtr + n * m);
 }
 
@@ -788,7 +790,7 @@ template<typename T>
 Matrix<T> Matrix<T>::transposition(Matrix<T> matr) {
     time_t t_time;
     t_time = time(nullptr);
-    if (this->get_m() == this->get_n())
+    if (this->get_column() == this->get_row())
     {
         for (unsigned int i = 0; i < 4; i++)
         {
@@ -827,6 +829,29 @@ typename Matrix<T>::Row Matrix<T>::operator[](size_t row){
         throw index_out_of_range_exception(__FILE__, typeid(*this).name(), __LINE__ - 4, ctime(&t_time), "Index out of range");
     }
     return Row(*this, row);
+}
+
+template<typename T>
+T &Matrix<T>::get_value_by_index(unsigned int i, unsigned int j) {
+    time_t t_time;
+    t_time = time(nullptr);
+    if (i >= this->n || j >= this->m)
+    {
+        throw index_out_of_range_exception(__FILE__, typeid(*this).name(), __LINE__ - 4, ctime(&t_time), "Index out of range");
+    }
+
+    else
+    {
+        if (this->mtr)
+        {
+            return mtr.get()[i * this->m + j];
+        }
+
+        else
+        {
+            throw is_empty_exception(__FILE__, typeid(*this).name(), __LINE__ - 4, ctime(&t_time), "Allocation memory error");
+        }
+    }
 }
 
 
